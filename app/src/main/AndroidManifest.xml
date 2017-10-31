@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.musichero.xmusic">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="com.musichero.xmusic.XMusicApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppThemeFull">
+        <activity
+            android:name="com.musichero.xmusic.YPYSplashActivity"
+            android:configChanges="touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.musichero.xmusic.YPYMainActivity"
+            android:configChanges="touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+
+        <activity
+            android:name="com.musichero.xmusic.YPYShowUrlActivity"
+            android:configChanges="touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.musichero.xmusic.YPYEqualizerActivity"
+            android:configChanges="touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
+
+        <service
+            android:name="com.musichero.xmusic.playservice.YPYMusicService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="super.android.musiconline.stream.action.TOGGLE_PLAYBACK" />
+                <action android:name="super.android.musiconline.stream.action.PLAY" />
+                <action android:name="super.android.musiconline.stream.action.PAUSE" />
+                <action android:name="super.android.musiconline.stream.action.NEXT" />
+                <action android:name="super.android.musiconline.stream.action.PREVIOUS" />
+                <action android:name="super.android.musiconline.stream.action.STOP" />
+                <action android:name="super.android.musiconline.stream.action.ACTION_SEEK" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver android:name="com.musichero.xmusic.playservice.YPYMusicIntentReceiver">
+            <intent-filter>
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="super.android.musiconline.stream.action.TOGGLE_PLAYBACK" />
+                <action android:name="super.android.musiconline.stream.action.NEXT" />
+                <action android:name="super.android.musiconline.stream.action.PREVIOUS" />
+                <action android:name="super.android.musiconline.stream.action.STOP" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.musichero.xmusic.imageloader.model.GlideConfiguration"
+            android:value="GlideModule" />
+
+    </application>
+
+</manifest>
