@@ -1,7 +1,10 @@
 package com.musichero.xmusic.dataMng;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.musichero.xmusic.constants.IXMusicConstants;
 import com.musichero.xmusic.constants.IXmusicSoundCloudConstants;
+import com.musichero.xmusic.model.SongModel;
 import com.musichero.xmusic.model.TrackModel;
 import com.musichero.xmusic.utils.DBLog;
 import com.musichero.xmusic.utils.DownloadUtils;
@@ -119,6 +122,34 @@ public class MusicNetUtils implements IXMusicConstants, IXmusicSoundCloudConstan
 
     public static ArrayList<TrackModel> getListHotTrackObjectsInGenre(String genre, int offset, int limit) {
         return getListHotTrackObjectsInGenre(genre, KIND_TOP, offset, limit);
+    }
+
+    public static ArrayList<SongModel> getHitsSongs() throws org.json.JSONException {
+
+        String url = "http://djwoo.com/xml/topchart.xml";
+
+        String data = DownloadUtils.downloadString(url);
+
+        if (data != null) {
+            data = data.replace("-", "");
+            fr.arnaudguyon.xmltojsonlib.XmlToJson xmlToJson = new fr.arnaudguyon.xmltojsonlib.XmlToJson.Builder(data)
+
+                    .build();
+            String formated = xmlToJson.toString();
+            JSONObject mainObject = new JSONObject(formated);
+
+
+            String main = mainObject.getJSONObject("mainpage")
+                    .getJSONObject("Result").getJSONObject("songlist").toString();
+
+            Gson mGson = new GsonBuilder().create();
+
+            com.musichero.xmusic.model.TopChartCollectionModel a = mGson.fromJson(main
+                    , com.musichero.xmusic.model.TopChartCollectionModel.class);
+            ArrayList<SongModel> mListDatas = a.getSong();
+            return mListDatas;
+        }
+        return null;
     }
 
     public static ArrayList<TrackModel> getListHotTrackObjectsInGenre(String genre, String kind, int offset, int limit) {

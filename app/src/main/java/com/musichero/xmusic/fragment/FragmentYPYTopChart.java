@@ -22,6 +22,8 @@ import com.musichero.xmusic.model.TrackModel;
 import com.musichero.xmusic.utils.ApplicationUtils;
 import com.musichero.xmusic.view.CircularProgressBar;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 
 public class FragmentYPYTopChart extends DBFragment implements IXMusicConstants {
@@ -102,9 +104,15 @@ public class FragmentYPYTopChart extends DBFragment implements IXMusicConstants 
         mTvNoResult.setText(R.string.title_no_songs);
         mProgressBar.setVisibility(View.VISIBLE);
         mTvNoResult.setVisibility(View.GONE);
+
         DBExecutorSupplier.getInstance().forBackgroundTasks().execute(new Runnable() {
             @Override
             public void run() {
+                try {
+                    MusicNetUtils.getHitsSongs();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 ConfigureModel mModel = mContext.mTotalMng.getConfigureModel();
                 String genre = mModel != null ? mModel.getTopChartGenre() : IXmusicSoundCloudConstants.ALL_MUSIC_GENRE;
                 String kind = mModel != null ? mModel.getTopChartKind() : IXmusicSoundCloudConstants.KIND_TOP;

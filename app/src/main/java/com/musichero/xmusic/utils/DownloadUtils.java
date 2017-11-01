@@ -77,6 +77,7 @@ public class DownloadUtils {
             conn.connect();
 
             int response = conn.getResponseCode();
+
             DBLog.d(TAG, "The response is: " + response);
             if (response == HttpURLConnection.HTTP_OK) {
                 is = conn.getInputStream();

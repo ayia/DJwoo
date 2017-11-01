@@ -30,6 +30,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        customDebugType {
+            debuggable true
+        }
+
     }
 
     /* 4) Exclude duplicate licenses */
@@ -62,5 +66,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'com.balysv:material-ripple:1.0.2'
+    compile 'com.github.smart-fun:XmlToJson:1.4.1'
 }
 
